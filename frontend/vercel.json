@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://8000-dep-01kmgna6b884nw78d99q3jf3yb-d.cloudspaces.litng.ai/api/:path*"
+    },
+    {
+      "source": "/health",
+      "destination": "https://8000-dep-01kmgna6b884nw78d99q3jf3yb-d.cloudspaces.litng.ai/health"
+    }
+  ]
+}

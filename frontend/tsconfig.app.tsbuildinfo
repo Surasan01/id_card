@@ -1,0 +1,1 @@
+{"root":["./src/App.test.tsx","./src/App.tsx","./src/api.ts","./src/main.tsx","./src/setupTests.ts","./src/types.ts","./src/vite-env.d.ts","./src/components/BatchBuilder.tsx","./src/components/JobsPanel.tsx","./src/components/LoginCard.tsx","./src/components/RecordEditor.tsx","./src/components/RecordTable.tsx"],"version":"5.9.3"}
