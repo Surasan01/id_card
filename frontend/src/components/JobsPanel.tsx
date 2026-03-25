@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { buildDownloadUrl, fetchJobAssets } from '../api';
+import { buildDownloadUrl, cancelJob, fetchJobAssets } from '../api';
 import type { GeneratedAsset, GenerationBatch, GenerationJob } from '../types';
 
 type JobsPanelProps = {
@@ -46,7 +46,7 @@ export function JobsPanel({ jobs, activeBatch, onRefresh }: JobsPanelProps) {
         ) : (
           <div className="jobs-grid">
             {jobs.map((job) => (
-              <JobCard key={job.id} job={job} />
+              <JobCard key={job.id} job={job} onRefresh={onRefresh} />
             ))}
           </div>
         )}
@@ -55,16 +55,19 @@ export function JobsPanel({ jobs, activeBatch, onRefresh }: JobsPanelProps) {
   );
 }
 
-function JobCard({ job }: { job: GenerationJob }) {
+function JobCard({ job, onRefresh }: { job: GenerationJob; onRefresh: () => void }) {
   const [expanded, setExpanded] = useState(false);
   const [imagesOpen, setImagesOpen] = useState(false);
   const [assets, setAssets] = useState<GeneratedAsset[] | null>(null);
   const [loadingImages, setLoadingImages] = useState(false);
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  const [cancelling, setCancelling] = useState(false);
 
   const pct = job.total_items > 0 ? Math.round((job.completed_items / job.total_items) * 100) : 0;
   const isDone = job.status === 'completed' || job.status === 'completed_with_errors';
   const isFailed = job.status === 'failed';
+  const isCancelled = job.status === 'cancelled';
+  const isActive = job.status === 'queued' || job.status === 'running';
 
   async function toggleImages() {
     if (imagesOpen) {
@@ -82,17 +85,37 @@ function JobCard({ job }: { job: GenerationJob }) {
     }
   }
 
+  async function handleCancel() {
+    setCancelling(true);
+    try {
+      await cancelJob(job.id);
+      onRefresh();
+    } finally {
+      setCancelling(false);
+    }
+  }
+
   return (
     <article className="job-card">
       <div className="job-card-header">
         <span className="job-id">{job.id.slice(0, 8)}</span>
-        <span className={`status-pill ${job.status}`}>{job.status}</span>
+        <span className={`status-pill ${job.status}`}>{job.status.replace('_', ' ')}</span>
+        {isActive && (
+          <button
+            className="btn btn-danger btn-sm job-cancel-btn"
+            onClick={() => void handleCancel()}
+            disabled={cancelling}
+            title="Stop job (keeps images generated so far)"
+          >
+            {cancelling ? '…' : '\u23F9 Stop'}
+          </button>
+        )}
       </div>
 
       <div className="job-progress">
         <div className="progress-bar">
           <div
-            className={`progress-fill${isDone ? ' done' : ''}${isFailed ? ' error' : ''}`}
+            className={`progress-fill${isDone ? ' done' : ''}${isFailed ? ' error' : ''}${isCancelled ? ' cancelled' : ''}`}
             style={{ width: `${pct}%` }}
           />
         </div>

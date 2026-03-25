@@ -217,6 +217,10 @@ export function fetchJob(jobId: string) {
   return request<GenerationJob>(`/jobs/${jobId}`);
 }
 
+export function cancelJob(jobId: string) {
+  return request<GenerationJob>(`/jobs/${jobId}/cancel`, { method: 'POST' });
+}
+
 export async function fetchJobAssets(jobId: string) {
   const payload = await request<{ items: GeneratedAsset[]; total: number }>(`/jobs/${jobId}/assets`);
   return payload.items;

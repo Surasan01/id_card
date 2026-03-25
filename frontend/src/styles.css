@@ -794,6 +794,15 @@ td input[type="checkbox"] { width: auto; accent-color: var(--c-primary); cursor:
 }
 .progress-fill.done { background: var(--c-success); }
 .progress-fill.error { background: var(--c-danger); }
+.progress-fill.cancelled { background: var(--c-text-muted); }
+
+.job-card-header .job-cancel-btn {
+  margin-left: auto;
+  padding: 3px 10px;
+  font-size: 11px;
+}
+
+.status-pill.cancelled { background: rgba(100, 116, 139, 0.12); color: var(--c-text-secondary); }
 
 .job-progress-text {
   display: flex;
