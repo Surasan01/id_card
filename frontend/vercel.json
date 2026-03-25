@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://8000-dep-01kmgna6b884nw78d99q3jf3yb-d.cloudspaces.litng.ai/api/:path*"
+      "destination": "https://8000-dep-01kmk05e8pn0fq29yk9kc07jbm-d.cloudspaces.litng.ai/api/:path*"
     },
     {
       "source": "/health",
-      "destination": "https://8000-dep-01kmgna6b884nw78d99q3jf3yb-d.cloudspaces.litng.ai/health"
+      "destination": "https://8000-dep-01kmk05e8pn0fq29yk9kc07jbm-d.cloudspaces.litng.ai/health"
     }
   ]
 }

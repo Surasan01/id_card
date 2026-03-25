@@ -7,11 +7,11 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'https://8000-dep-01kmgna6b884nw78d99q3jf3yb-d.cloudspaces.litng.ai',
+        target: 'https://8000-dep-01kmk05e8pn0fq29yk9kc07jbm-d.cloudspaces.litng.ai',
         changeOrigin: true,
       },
       '/health': {
-        target: 'https://8000-dep-01kmgna6b884nw78d99q3jf3yb-d.cloudspaces.litng.ai',
+        target: 'https://8000-dep-01kmk05e8pn0fq29yk9kc07jbm-d.cloudspaces.litng.ai',
         changeOrigin: true,
       },
     },
